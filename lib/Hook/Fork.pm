@@ -9,6 +9,7 @@ __PACKAGE__->bootstrap($VERSION);
 
 use Hook::Fork::Task;
 use Guard;
+use Scalar::Util qw(refaddr);
 
 my %state;
 
@@ -40,6 +41,18 @@ sub make_registerer {
         $state->{head} = $obj if !$state->{head};
         $state->{tail}->append($obj) if $state->{tail};
         $state->{tail} = $obj;
+
+        if(defined wantarray){
+            return guard {
+                if(refaddr $obj == refaddr $state->{tail}){
+                    $state->{tail} = $obj->{prev};
+                }
+                if(refaddr $obj == refaddr $state->{head}){
+                    $state->{head} = $obj->{next};
+                }
+                $obj->remove;
+            };
+        }
     }
 }
 
