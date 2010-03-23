@@ -21,7 +21,9 @@ void hook_fork_child(void){
 
 MODULE = Hook::Fork		PACKAGE = Hook::Fork
 
-void
-init()
+int
+_init()
   CODE:
-    pthread_atfork(&hook_fork_prepare, &hook_fork_parent, &hook_fork_child);
+     RETVAL = pthread_atfork(&hook_fork_prepare, &hook_fork_parent, &hook_fork_child);
+  OUTPUT:
+     RETVAL

@@ -66,6 +66,14 @@ BEGIN {
     *run_before_hooks = make_runner('before');
 }
 
+sub init {
+    my $code = _init();
+    if( $code != 0) {
+        $! = $code;
+        die "Problem hooking fork with pthread_atfork: $!";
+    }
+}
+
 use Sub::Exporter -setup => {
     exports => [ map { "register_${_}_fork_hook" } keys %state ],
 };
