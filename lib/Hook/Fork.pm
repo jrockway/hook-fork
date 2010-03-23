@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use parent qw/DynaLoader/;
 
-our $VERSION = '0.01';
+our $VERSION = '0.01_01';
 
 __PACKAGE__->bootstrap($VERSION);
 
