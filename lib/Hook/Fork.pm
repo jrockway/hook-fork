@@ -118,7 +118,7 @@ Hook::Fork - automatically run code after a fork
 
 Forking can often confuse modules; if a parent opens a socket and sets
 some code to run at DESTROY to close it, that DESTROY will run in both
-the parent in the child.  This means the child exiting can mess up the
+the parent and the child.  This means the child exiting can mess up the
 parent, or the parent exiting can mess up the child.
 
 This module lets you run some code at fork time, so you can setup a
